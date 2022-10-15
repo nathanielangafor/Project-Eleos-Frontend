@@ -53,11 +53,7 @@
       // privacyPolicyUrl: function() {
       //   window.location.assign('<your-privacy-policy-url>');
       // },
-      callbacks: {
-        signInSuccessWithAuthResult: function () {
-          window.close();
-        }
-      }
+      signInSuccessUrl: (new URL(location.href)).searchParams.get('redirect')
     };
 
     // Initialize the FirebaseUI Widget using Firebase.
