@@ -1,4 +1,4 @@
-const serverEndpoint = location.href.includes('binary-person') ? 'https://port-7788.ms.binary-person.dev' : 'http://64.190.90.49';
+const serverEndpoint = location.href.includes('binary-person') ? 'https://port-7788.ms.binary-person.dev' : 'http://64.190.90.49:7788';
 
 async function authedFetch(url) {
     return await fetch(url, {
