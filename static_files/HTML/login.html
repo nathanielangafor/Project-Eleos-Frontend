@@ -37,7 +37,7 @@
   <script type="text/javascript">
     // FirebaseUI config.
     var uiConfig = {
-      signInSuccessUrl: (new URL(location.href)).searchParams.get('redirect') || 'organizations.html',
+      signInSuccessUrl: 'organizations.html',
       signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -48,7 +48,7 @@
         //   requireDisplayName: false
         // }
       ],
-      // signInFlow: 'popup',
+      signInFlow: 'popup',
       // tosUrl: '<your-tos-url>',
       // privacyPolicyUrl: function() {
       //   window.location.assign('<your-privacy-policy-url>');

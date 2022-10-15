@@ -39,7 +39,7 @@ async function loadData() {
                             <span class="badge bg-secondary">${element['tags'][0]}</span>
                         </div>
                         <div class="col-sm-3 text-lg-end">
-                            <a href="#" onClick="donate('${element.id}'); event.preventDefault()" class="btn btn-primary stretched-link">${user.projects.includes(element.id) ? 'Currently donating' : 'Donate resources!'}</a>
+                            <a href="#" data="${element.id}" class="btn btn-primary stretched-link donate-event-handler">${user.projects.includes(element.id) ? 'Currently donating' : 'Donate resources!'}</a>
                         </div>
                     </div>
                 </div>
@@ -47,13 +47,21 @@ async function loadData() {
         </div>`
     });
     document.getElementById("orgs").innerHTML = data;
+    for (const element of document.getElementsByClassName('donate-event-handler')) {
+        element.onclick = donate;
+    }
 }
 
-window.donate = async function donate(projectId) {
+window.donate = async function donate(event) {
+    event.preventDefault();
+    const projectId = event.target.getAttribute('data');
+
     var user = await (await authedFetch(serverEndpoint + '/api/user')).json();
 
     if (!user.projects.includes(projectId)) {
         await authedFetch(serverEndpoint + '/api/user/addProject?id=' + encodeURIComponent(projectId));
+    } else {
+        await authedFetch(serverEndpoint + '/api/user/removeProject?id=' + encodeURIComponent(projectId));
     }
     loadData();
 }
