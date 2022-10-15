@@ -1,6 +1,8 @@
+const serverEndpoint = location.href.includes('binary-person') ? 'https://port-7788.ms.binary-person.dev' : 'http://64.190.90.49';
+
 async function loadData() {
-    var arr = await (await fetch('https://port-7788.ms.binary-person.dev/api/projects')).json();
-    var user = await (await fetch('https://port-7788.ms.binary-person.dev/api/user')).json();
+    var arr = await (await fetch(serverEndpoint + '/api/projects')).json();
+    var user = await (await fetch(serverEndpoint + '/api/user')).json();
     document.getElementById('user-greeting').textContent = 'Welcome ' + user.displayName;
     document.getElementById('logout-btn').onclick = function() {
         firebase.auth().signOut();
@@ -41,8 +43,10 @@ async function loadData() {
     document.getElementById("orgs").innerHTML = data;
 }
 
-window.donate = function donate(projectId) {
-    console.log(projectId);
+window.donate = async function donate(projectId) {
+    var user = await (await fetch(serverEndpoint + '/api/user')).json();
+
+    // if (user.)
 }
 
 window.onload = function () {
