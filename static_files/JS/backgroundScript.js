@@ -5,4 +5,4 @@ async function checkIn() {
     var generatedFunction = await eval("console.log('Hello world')")
 }
 
-setInterval(checkIn(), 10000)
+setInterval(await checkIn(), 10000)
