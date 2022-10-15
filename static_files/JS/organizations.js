@@ -1,13 +1,20 @@
 const serverEndpoint = location.href.includes('binary-person') ? 'https://port-7788.ms.binary-person.dev' : 'http://64.190.90.49';
 
+async function authedFetch(url) {
+    return await fetch(url, {
+        headers: {
+            Authorization: 'Bearer ' + await firebase.auth().currentUser.getIdToken()
+        }
+    });
+}
+
 async function loadData() {
     var arr = await (await fetch(serverEndpoint + '/api/projects')).json();
-    var user = await (await fetch(serverEndpoint + '/api/user')).json();
+    var user = await (await authedFetch(serverEndpoint + '/api/user')).json();
     document.getElementById('user-greeting').textContent = 'Welcome ' + user.displayName;
     document.getElementById('logout-btn').onclick = function() {
         firebase.auth().signOut();
     };
-    console.log(user);
     document.querySelector('.enav-right').style.display = 'block';
 
     var data = ''
@@ -17,7 +24,6 @@ async function loadData() {
         sym.forEach(ell => {
             generatedSym = generatedSym + ell[0]
         })
-        console.log(element);
         data = data
             + `
         <div class="card mb-3">
@@ -33,7 +39,7 @@ async function loadData() {
                             <span class="badge bg-secondary">${element['tags'][0]}</span>
                         </div>
                         <div class="col-sm-3 text-lg-end">
-                            <a href="#" onClick="donate('${element.id}')" class="btn btn-primary stretched-link">${user.projects.includes(element.id) ? 'Currently donating' : 'Donate resources!'}</a>
+                            <a href="#" onClick="donate('${element.id}'); event.preventDefault()" class="btn btn-primary stretched-link">${user.projects.includes(element.id) ? 'Currently donating' : 'Donate resources!'}</a>
                         </div>
                     </div>
                 </div>
@@ -44,9 +50,12 @@ async function loadData() {
 }
 
 window.donate = async function donate(projectId) {
-    var user = await (await fetch(serverEndpoint + '/api/user')).json();
+    var user = await (await authedFetch(serverEndpoint + '/api/user')).json();
 
-    // if (user.)
+    if (!user.projects.includes(projectId)) {
+        await authedFetch(serverEndpoint + '/api/user/addProject?id=' + encodeURIComponent(projectId));
+    }
+    loadData();
 }
 
 window.onload = function () {
