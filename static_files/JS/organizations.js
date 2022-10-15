@@ -1,4 +1,4 @@
-const serverEndpoint = location.href.includes('binary-person') ? 'https://port-7788.ms.binary-person.dev' : 'http://64.190.90.49:7788';
+const serverEndpoint = 'http://64.190.90.49:7788';
 
 async function authedFetch(url) {
     return await fetch(url, {
@@ -67,12 +67,13 @@ window.donate = async function donate(event) {
 }
 
 window.onload = function () {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(async user => {
         if (user) {
             loadData();
         } else {
             window.location.href = 'login.html?redirect=' + encodeURIComponent(location.href);
         }
+        localStorage.setItem('firebaseToken', await firebase.auth().currentUser?.getIdToken());
     });
 };
 

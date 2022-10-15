@@ -11,9 +11,6 @@
     "browser_action": {
         "default_icon": "./static_files/photos/icon16.png",
         "default_popup": "popup.html"
-    }, 
-    "background": {
-        "service_worker": "./static_files/JS/backgroundScript.js"
-    }, 
+    },
     "content_security_policy": "script-src 'self' https://code.jquery.com https://cdn.jsdelivr.net https://www.gstatic.com https://apis.google.com 'sha256-bcjIMjs7WoKtJQxRK2KfHU1FNvGwZ1Tioxl7bvLWYbY=' 'sha256-EJ6OhZTYIcGexb4tdD+6B5Sk7WSH0P8HH5kyPdr8G+s=' 'sha256-iZVgw1xTyjCsE2lMFgTEMtL0pXnKSyo9Ayf6/Er/qeE=' 'unsafe-inline' 'unsafe-eval'; object-src 'self'"
 }

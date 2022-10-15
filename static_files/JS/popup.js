@@ -1,6 +1,18 @@
+const serverEndpoint = 'http://64.190.90.49:7788';
 
-function loadData() {
-    var arr = [[1, "Abramson Foundation", "Washington DC", "Fundraising", "Beep boop, description goes here", 31, 212], [2, "Abramson Foundation", "Washington DC", "Fundraising", "Beep boop, description goes here", 3, 112]]
+async function authedFetch(url) {
+    return await fetch(url, {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('firebaseToken')
+        }
+    });
+}
+
+async function loadData() {
+    var arr = await (await fetch(serverEndpoint + '/api/projects')).json();
+    var user = await (await authedFetch(serverEndpoint + '/api/user')).json();
+    console.log(user);
+    
     var data = ''
     arr.forEach(element => {
         var generatedSym = ""
@@ -12,5 +24,19 @@ function loadData() {
     });
     document.getElementById("orgs").innerHTML= data;
 }
-window.onload = loadData;
+window.onload = async function() {
+    if (localStorage.getItem('firebaseToken')) {
+        const res = await fetch(serverEndpoint + '/api/user', {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('firebaseToken')
+            }
+        });
+        if (res.status !== 401) {
+            document.getElementById('main-stats').style.display = 'block';
+            loadData();
+            return;
+        }
+    }
+    window.open('static_files/HTML/organizations.html');
+};
 
