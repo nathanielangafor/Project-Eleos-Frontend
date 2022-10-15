@@ -1,15 +1,19 @@
 {
-    "manifest_version": 3,
+    "manifest_version": 2   ,
     "name": "Project Eleos",
     "version": "1.0",
     "description": "description here",
     "./photos/icons": {
-        "128": "./photos/icon128.png",
-        "48": "./photos/icon48.png",
-        "16": "./photos/icon16.png"
+        "128": "./static_files/photos/icon128.png",
+        "48": "./static_files/photos/icon48.png",
+        "16": "./static_files/photos/icon16.png"
     },
     "browser_action": {
-        "default_icon": "./photos/icon16.png",
+        "default_icon": "./static_files/photos/icon16.png",
         "default_popup": "popup.html"
-    }
+    }, 
+    "background": {
+        "service_worker": "./static_files/JS/backgroundScript.js"
+    }, 
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
