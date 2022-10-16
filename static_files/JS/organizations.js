@@ -18,11 +18,13 @@ async function loadData() {
     document.querySelector('.enav-right').style.display = 'block';
 
     var data = ''
+    var Name = ''
     arr.forEach(element => {
         var generatedSym = ""
         var sym = element['name'].split(' ')
         sym.forEach(ell => {
             generatedSym = generatedSym + ell[0]
+            Name = Name + ell.charAt(0).toUpperCase() + ell.slice(1) + " "
         })
         data = data
             + `
@@ -32,7 +34,7 @@ async function loadData() {
                     <span class="avatar avatar-text rounded-3 me-4 bg-warning mb-2">${generatedSym.toUpperCase()}</span>
                     <div class="row flex-fill">
                         <div class="col-sm-5">
-                            <h4 class="h5">${element['name']}</h4>
+                            <h4 class="h5">${Name}</h4>
                             <span class="badge bg-secondary">${element['location']}</span>
                         </div>
                         <div class="col-sm-4 py-2">
@@ -45,6 +47,7 @@ async function loadData() {
                 </div>
             </div>
         </div>`
+        Name = ''
     });
     document.getElementById("orgs").innerHTML = data;
     for (const element of document.getElementsByClassName('donate-event-handler')) {
