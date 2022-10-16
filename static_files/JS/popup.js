@@ -21,18 +21,9 @@ async function loadData() {
     userProjectIDs.forEach(outterElem => {
         arr.filter(function(item){
             
-            var tasks = item['tasks']
-            var completedTasks = 0
-
-            for (let i = 0; i < tasks; i++) {
-                console.log(item['taskData'])
-                if (item['taskData'][i] != null) {
-                    completedTasks++;
-                }
-            }
-
             if (item['id'] == outterElem) {
-                var earnings = completedTasks * item['pricePerTask']
+                var completedTasks = user.tasksCompleted[item.id] || 0;
+                var earnings = user.projectEarnings[item.id] || 0;
                 totalEarnings = earnings + totalEarnings
                 var generatedSym = ""
                 var sym = item['name'].split(' ')
