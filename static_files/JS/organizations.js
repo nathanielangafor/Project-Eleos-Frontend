@@ -52,7 +52,7 @@ async function loadData() {
     }
 }
 
-window.donate = async function donate(event) {
+async function donate(event) {
     event.preventDefault();
     const projectId = event.target.getAttribute('data');
 
