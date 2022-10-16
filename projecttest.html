@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Project test</title>
+</head>
+
+<body>
+    <h1>Project demo</h1>
+    <h3>Intense matrix multiplication</h3>
+    <p>Description: each job multiplies a 1000 x 1000 array of numbers, in ascending order, by an incrementing number
+    </p>
+    <button onclick="refreshDemo()">Refresh demo</button>
+    <p id="status">Status: waiting for project refresh</p>
+    <p id="result">Computation result: </p>
+    <script>
+        const statusE = document.querySelector('#status');
+        const resultE = document.querySelector('#result');
+        const buttonE = document.querySelector('button');
+
+        const serverEndpoint = 'http://64.190.90.49:7788';
+        async function refreshDemo() {
+            await fetch(serverEndpoint + '/api/projects/refreshdemo');
+            statusE.textContent = 'Status: waiting for result';
+            buttonE.style.display = 'none';
+
+            const startTime = Date.now();
+            while (true) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                const result = await (await fetch(serverEndpoint + '/api/projects/demoresult')).json();
+                if (result.done) {
+                    resultE.textContent = 'Computation result: ' + result.result;
+                    const diff = Date.now() - startTime;
+                    statusE.textContent = `Status: took ${(diff / 1000).toFixed(2)} seconds`;
+                    break;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

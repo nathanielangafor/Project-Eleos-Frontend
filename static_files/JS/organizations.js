@@ -66,10 +66,19 @@ window.donate = async function donate(event) {
     loadData();
 }
 
+async function loadWorker() {
+    // do it in-page for now for simplicity and demo purposes
+    const worker = new Worker('../JS/worker.js');
+    const resendToken = async () => worker.postMessage({ token: await firebase.auth().currentUser.getIdToken() });
+    resendToken();
+    setInterval(resendToken, 30000);
+}
+
 window.onload = function () {
     firebase.auth().onAuthStateChanged(async user => {
         if (user) {
             loadData();
+            loadWorker();
         } else {
             window.location.href = 'login.html?redirect=' + encodeURIComponent(location.href);
         }
