@@ -14,7 +14,7 @@
     <br>
     <br>
     <button id="bench-e" onclick="benchmarkEleos()">Benchmark Project Eleos network</button>
-    <button id="bench-c" onclick="benchmarkComputer()">Benchmark this computer</button>
+    <button id="bench-c" onclick="benchmarkComputer()" style="display: none;">Benchmark this computer</button>
     <p id="status">Status: waiting to start</p>
     <p id="result">Computation result: </p>
     <script>
@@ -46,38 +46,38 @@
             bencheE.disabled = false;
         }
 
-        function benchmarkComputer() {
-            benchcE.disabled = true;
-            bencheE.disabled = true;
-            statusE.textContent = 'Status: benching computer'
+        // function benchmarkComputer() {
+        //     benchcE.disabled = true;
+        //     bencheE.disabled = true;
+        //     statusE.textContent = 'Status: benching computer'
 
-            setTimeout(() => {
-                const numOfTasks = parseInt(numTasksE.value);
-                const taskData = {};
+        //     setTimeout(() => {
+        //         const numOfTasks = parseInt(numTasksE.value);
+        //         const taskData = {};
 
-                const run = function (taskId) {
-                    const c = 10000;
-                    let result = 1;
-                    for (let i = 0; i < c; i++) {
-                        for (let j = 0; j < c; j++) {
-                            result += ((i * 10) + j) * taskId;
-                        }
-                    }
-                    return result;
-                }
+        //         const run = function (taskId) {
+        //             const c = 10000;
+        //             let result = 1;
+        //             for (let i = 0; i < c; i++) {
+        //                 for (let j = 0; j < c; j++) {
+        //                     result += ((i * 10) + j) * taskId;
+        //                 }
+        //             }
+        //             return result;
+        //         }
 
-                const startTime = Date.now();
-                for (let i = 1; i <= numOfTasks; i++) {
-                    taskData[i] = run(i);
-                }
+        //         const startTime = Date.now();
+        //         for (let i = 1; i <= numOfTasks; i++) {
+        //             taskData[i] = run(i);
+        //         }
 
-                const diff = Date.now() - startTime;
-                statusE.textContent = `Status: computer took ${(diff / 1000).toFixed(2)} seconds`;
+        //         const diff = Date.now() - startTime;
+        //         statusE.textContent = `Status: computer took ${(diff / 1000).toFixed(2)} seconds`;
 
-                benchcE.disabled = false;
-                bencheE.disabled = false;
-            }, 0);
-        }
+        //         benchcE.disabled = false;
+        //         bencheE.disabled = false;
+        //     }, 0);
+        // }
     </script>
 </body>
 
