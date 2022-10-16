@@ -17,7 +17,7 @@
     <button id="bench-c" onclick="benchmarkComputer()" style="display: none;">Benchmark this computer</button>
     <p id="result">Computation result: </p>
     <br>
-    <p id="Online">Online systems: 1</p>
+    <p id="online">Online users: </p>
     <p id="status">Status: waiting to start</p>
     <script>
         const numTasksE = document.querySelector('#num-tasks');
@@ -25,8 +25,15 @@
         const resultE = document.querySelector('#result');
         const bencheE = document.querySelector('#bench-e');
         const benchcE = document.querySelector('#bench-c');
+        const onlineE = document.querySelector('#online');
 
         const serverEndpoint = 'http://64.190.90.49:7788';
+
+        setInterval(async () => {
+            const json = await (await fetch(serverEndpoint + '/api/projects/demousers')).json();
+            onlineE.textContent = 'Online users: ' + json.count;
+        }, 1000);
+
         async function benchmarkEleos() {
             await fetch(serverEndpoint + '/api/projects/refreshdemo?tasks=' + numTasksE.value);
             statusE.textContent = 'Status: benching network';
